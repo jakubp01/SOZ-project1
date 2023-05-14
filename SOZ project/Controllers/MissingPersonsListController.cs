@@ -19,9 +19,15 @@ namespace SOZ_project.Controllers
             
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int gender)
         {
-            var reports = (await Mediator.Send(new GetReports.Query())).Value;
+            var reports = (await Mediator.Send(new GetReports.Query(gender))).Value;
+            return View(reports);
+        }
+        
+        public async Task<ActionResult> Female()
+        {
+            var reports = (await Mediator.Send(new GetReports.Query(0))).Value;
             return View(reports);
         }
 
@@ -32,13 +38,13 @@ namespace SOZ_project.Controllers
             return View(report);
         }
 
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles ="admin,User")]
         public ActionResult Create()
         {
             return View(new ReportModel());
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin,User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ReportModel model)

@@ -17,5 +17,7 @@ namespace SOZ_project.Models
         public string Age { get; set; }
 
         public string Status { get; set; }
+
+        public string Jpg { get; set; }
     }
 }

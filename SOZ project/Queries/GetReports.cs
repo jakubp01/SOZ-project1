@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SOZ_project.Controllers.Core;
+using SOZ_project.Enums;
 using SOZ_project.Models;
 using System.Security.Claims;
 
@@ -10,7 +11,11 @@ namespace SOZ_project.Queries
     {
         public class Query : IRequest<Result<List<ReportModel>>>
         {
-
+           public int gender { get; set; }
+            public Query(int gender)
+            {
+                this.gender = gender;
+            }
         }
 
         public class Handler : IRequestHandler<Query, Result<List<ReportModel>>>
@@ -25,17 +30,30 @@ namespace SOZ_project.Queries
 
             public async Task<Result<List<ReportModel>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                
-                var response = await _context.Reports
-                    .ToListAsync(cancellationToken: cancellationToken);
-                if (response != null)
+                List<ReportModel> response;
+                if(request.gender==1)
                 {
-
-                    return Result<List<ReportModel>>.Success(response);
-
+                    response = await _context.Reports
+                        .Where(x=>x.Gender=="Kobieta")
+                        .ToListAsync(cancellationToken: cancellationToken);
                 }
-                return Result<List<ReportModel>>.Failure("error");
+                else if(request.gender == 2)
+                {
+                    response = await _context.Reports
+                        .Where(x => x.Gender == "Mężczyzna")
+                        .ToListAsync(cancellationToken: cancellationToken);
+                }
+                else
+                     response = await _context.Reports
+                        .ToListAsync(cancellationToken: cancellationToken);
+                    if (response != null)
+                    {
 
+                        return Result<List<ReportModel>>.Success(response);
+
+                    }
+                    return Result<List<ReportModel>>.Failure("error");
+                
             }
         }
     }

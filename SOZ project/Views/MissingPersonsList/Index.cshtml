@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SOZ_project.Models.ReportModel>
+﻿@using SOZ_project.Enums;
+@model IEnumerable<SOZ_project.Models.ReportModel>
 
 @{
     ViewData["Title"] = "Lista osób zaginionych";
@@ -9,6 +10,16 @@
 <p>
     <a asp-action="Create">Nowe Zgłoszenie</a>
 </p>
+
+@Html.ActionLink("Kobiety", "Index", new {gender=1}) |
+@Html.ActionLink("Meżczyźni", "Index", new {  gender=2 }) |
+
+@*<button>
+    Kobiety
+</button>
+<button>
+    Mężczyźni
+</button>*@
 <table class="table">
     <thead>
         <tr>

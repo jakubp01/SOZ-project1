@@ -4,6 +4,7 @@
     ViewData["Title"] = "Szczegóły";
 }
 
+
 <h1>Szczegóły Złoszenia</h1>
 
 <div>
@@ -47,7 +48,11 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Jpg)
+        </dd>
     </dl>
+    <img src="../jpgs/zdj.jpg" alt="ASP.NET" />
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |
